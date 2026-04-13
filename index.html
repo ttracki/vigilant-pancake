@@ -78,6 +78,34 @@
         font-size: 3rem;
         margin-bottom: 10px;
     }
+
+    /* Swipe Animations */
+    .swipe-left {
+        animation: swipeLeft 0.4s ease-out forwards;
+    }
+
+    .swipe-right {
+        animation: swipeRight 0.4s ease-out forwards;
+    }
+
+    @keyframes swipeLeft {
+        0% { transform: translateX(0); opacity: 1; }
+        100% { transform: translateX(-300px); opacity: 0; }
+    }
+
+    @keyframes swipeRight {
+        0% { transform: translateX(0); opacity: 1; }
+        100% { transform: translateX(300px); opacity: 0; }
+    }
+
+    .card-reset {
+        animation: resetCard 0.3s ease-out forwards;
+    }
+
+    @keyframes resetCard {
+        0% { transform: scale(0.9); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
 </style>
 </head>
 <body>
@@ -90,8 +118,7 @@
         <h2>Swipe for the Brand</h2>
 
         <p style="font-size:1.2rem;">
-            Welcome! This game uses a fun swipe system inspired by apps like Tinder.
-            Swipe <strong>RIGHT 👍</strong> for professional posts and 
+            This game works like Tinder — swipe <strong>RIGHT 👍</strong> for professional posts and 
             <strong>LEFT 👎</strong> for unprofessional ones.
         </p>
 
@@ -119,6 +146,33 @@
 </div>
 
 <script>
+// Simple beep sound generator
+function playBeep(type) {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    if (type === "correct") {
+        osc.frequency.value = 600;
+        gain.gain.value = 0.2;
+    } else if (type === "wrong") {
+        osc.frequency.value = 200;
+        gain.gain.value = 0.25;
+    } else if (type === "start") {
+        osc.frequency.value = 750;
+        gain.gain.value = 0.3;
+    } else if (type === "end") {
+        osc.frequency.value = 400;
+        gain.gain.value = 0.3;
+    }
+
+    osc.start();
+    osc.stop(ctx.currentTime + 0.15);
+}
+
 // TEXT POSTS (realistic)
 const textPosts = [
     { text: "First day at BrightPath. Hoping I don’t break anything.", correct: "right" },
@@ -166,15 +220,38 @@ function showCard() {
 function swipe(direction) {
     if (index >= allCards.length) return;
 
-    if (direction === allCards[index].correct) {
-        score++;
+    // Add animation class
+    if (direction === "left") {
+        cardElement.classList.add("swipe-left");
+    } else {
+        cardElement.classList.add("swipe-right");
     }
 
-    index++;
-    showCard();
+    // Play sound
+    if (direction === allCards[index].correct) {
+        score++;
+        playBeep("correct");
+    } else {
+        playBeep("wrong");
+    }
+
+    // Wait for animation to finish
+    setTimeout(() => {
+        cardElement.classList.remove("swipe-left", "swipe-right");
+        index++;
+        showCard();
+
+        // Reset animation
+        cardElement.classList.add("card-reset");
+        setTimeout(() => {
+            cardElement.classList.remove("card-reset");
+        }, 300);
+    }, 400);
 }
 
 function endGame() {
+    playBeep("end");
+
     cardElement.style.display = "none";
     document.getElementById("left-btn").style.display = "none";
     document.getElementById("right-btn").style.display = "none";
@@ -190,6 +267,7 @@ document.getElementById("left-btn").addEventListener("click", () => swipe("left"
 document.getElementById("right-btn").addEventListener("click", () => swipe("right"));
 
 document.getElementById("start-btn").addEventListener("click", () => {
+    playBeep("start");
     document.getElementById("instructions-screen").style.display = "none";
     document.getElementById("gameplay-screen").style.display = "block";
     showCard();
@@ -198,3 +276,4 @@ document.getElementById("start-btn").addEventListener("click", () => {
 
 </body>
 </html>
+
