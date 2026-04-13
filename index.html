@@ -273,7 +273,6 @@ function swipe(direction) {
 }
 
 function endGame() {
-    playBeep("end");
 
     cardElement.style.display = "none";
     document.getElementById("left-btn").style.display = "none";
@@ -290,7 +289,6 @@ document.getElementById("left-btn").addEventListener("click", () => swipe("left"
 document.getElementById("right-btn").addEventListener("click", () => swipe("right"));
 
 document.getElementById("start-btn").addEventListener("click", () => {
-    playBeep("start");
     bgMusic.play();
     document.getElementById("instructions-screen").style.display = "none";
     document.getElementById("gameplay-screen").style.display = "block";
