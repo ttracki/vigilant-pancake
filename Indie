@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Swipe for the Brand</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #game-container {
+        margin-top: 40px;
+        background: white;
+        padding: 25px;
+        width: 90%;
+        max-width: 600px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    #card {
+        font-size: 1.3rem;
+        margin-bottom: 25px;
+        min-height: 120px;
+    }
+
+    .btn {
+        padding: 12px 25px;
+        margin: 10px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        color: white;
+    }
+
+    #left-btn { background: #d9534f; }
+    #right-btn { background: #5cb85c; }
+
+    #result {
+        font-size: 1.4rem;
+        margin-top: 20px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<div id="game-container">
+    <h2>Swipe for the Brand</h2>
+    <p id="instructions">Swipe LEFT for unprofessional. Swipe RIGHT for professional.</p>
+
+    <div id="card"></div>
+
+    <button id="left-btn" class="btn">Swipe LEFT</button>
+    <button id="right-btn" class="btn">Swipe RIGHT</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+// TEXT POSTS (realistic)
+const textPosts = [
+    { text: "First day at BrightPath. Hoping I don’t break anything.", correct: "right" },
+    { text: "Why do people email me things they could’ve Googled in 10 seconds.", correct: "left" },
+    { text: "Wrapped up a great meeting with the project team. Feeling productive today.", correct: "right" },
+    { text: "Whoever designed our new software update… we need to talk.", correct: "left" },
+    { text: "Appreciate the support from everyone on the team this week. Busy but good.", correct: "right" },
+    { text: "BrightPath’s coffee machine is the only thing keeping me alive right now.", correct: "right" },
+    { text: "Customer yelled at me for something that wasn’t even my fault. Love that.", correct: "left" },
+    { text: "Proud of the work our team did on the community project today.", correct: "right" },
+    { text: "Can’t wait for this day to be over. Everything is annoying.", correct: "left" },
+    { text: "Shoutout to the onboarding team — super helpful this week.", correct: "right" }
+];
+
+// FUNNY IMAGE IDEAS (all unprofessional)
+const imagePosts = [
+    { text: "Image: Employee asleep in their chair with a granola bar in their hand.", correct: "left" },
+    { text: "Image: Desk covered in empty energy drink cans with a note saying 'don’t judge me.'", correct: "left" },
+    { text: "Image: Blurry Zoom selfie with a 'send help' sticky note behind them.", correct: "left" },
+    { text: "Image: Dog blocking the camera during a video call.", correct: "left" },
+    { text: "Image: Coworker wrapped in a blanket because the AC is freezing.", correct: "left" },
+    { text: "Image: Spilled coffee shaped like a sad face on reports.", correct: "left" },
+    { text: "Image: Screen with 30+ tabs open including memes and shopping.", correct: "left" },
+    { text: "Image: Coworker hiding behind a giant plant during a meeting.", correct: "left" },
+    { text: "Image: Whiteboard covered in doodles including a 'team mascot.'", correct: "left" },
+    { text: "Image: Bathroom mirror selfie with company badge visible.", correct: "left" }
+];
+
+const allCards = [...textPosts, ...imagePosts];
+
+let index = 0;
+let score = 10;
+
+const cardElement = document.getElementById("card");
+const resultElement = document.getElementById("result");
+
+function showCard() {
+    if (index < allCards.length) {
+        cardElement.textContent = allCards[index].text;
+    } else {
+        endGame();
+    }
+}
+
+function swipe(direction) {
+    if (index >= allCards.length) return;
+
+    if (direction === allCards[index].correct) {
+        score++;
+    } else {
+        score--;
+    }
+
+    index++;
+    showCard();
+}
+
+function endGame() {
+    cardElement.style.display = "none";
+    document.getElementById("left-btn").style.display = "none";
+    document.getElementById("right-btn").style.display = "none";
+
+    if (score >= 15) {
+        resultElement.textContent = `Final Score: ${score} — You are a Brand Guardian!`;
+    } else {
+        resultElement.textContent = `Final Score: ${score} — Your digital footprint needs work.`;
+    }
+}
+
+document.getElementById("left-btn").addEventListener("click", () => swipe("left"));
+document.getElementById("right-btn").addEventListener("click", () => swipe("right"));
+
+showCard();
+</script>
+
+</body>
+</html>
