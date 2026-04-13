@@ -4,10 +4,11 @@
 <meta charset="UTF-8">
 <title>Swipe for the Brand</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
     body {
-        font-family: Arial, sans-serif;
-        background: #f4f4f4;
+        font-family: "Comic Sans MS", Arial, sans-serif;
+        background: #ffeecf;
         margin: 0;
         padding: 0;
         display: flex;
@@ -17,53 +18,104 @@
 
     #game-container {
         margin-top: 40px;
-        background: white;
+        background: #ffffff;
         padding: 25px;
         width: 90%;
         max-width: 600px;
-        border-radius: 12px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.15);
         text-align: center;
+        border: 4px solid #ffcf66;
+    }
+
+    h2 {
+        font-size: 2rem;
+        color: #ff8c00;
+        margin-bottom: 10px;
     }
 
     #card {
-        font-size: 1.3rem;
+        font-size: 1.4rem;
         margin-bottom: 25px;
         min-height: 120px;
+        padding: 15px;
+        background: #fff7e6;
+        border-radius: 12px;
+        border: 2px dashed #ffb347;
     }
 
     .btn {
-        padding: 12px 25px;
+        padding: 14px 30px;
         margin: 10px;
         border: none;
-        border-radius: 8px;
-        font-size: 1.1rem;
+        border-radius: 12px;
+        font-size: 1.2rem;
         cursor: pointer;
         color: white;
+        font-weight: bold;
     }
 
-    #left-btn { background: #d9534f; }
-    #right-btn { background: #5cb85c; }
+    #left-btn { background: #ff5c5c; }
+    #right-btn { background: #4cd964; }
+    #start-btn { background: #ff8c00; }
 
     #result {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         margin-top: 20px;
         font-weight: bold;
+        color: #ff8c00;
+    }
+
+    #instructions-screen {
+        display: block;
+    }
+
+    #gameplay-screen {
+        display: none;
+    }
+
+    .emoji {
+        font-size: 3rem;
+        margin-bottom: 10px;
     }
 </style>
 </head>
 <body>
 
 <div id="game-container">
-    <h2>Swipe for the Brand</h2>
-    <p id="instructions">Swipe LEFT for unprofessional. Swipe RIGHT for professional.</p>
 
-    <div id="card"></div>
+    <!-- INSTRUCTION SCREEN -->
+    <div id="instructions-screen">
+        <div class="emoji">📱🔥</div>
+        <h2>Swipe for the Brand</h2>
 
-    <button id="left-btn" class="btn">Swipe LEFT</button>
-    <button id="right-btn" class="btn">Swipe RIGHT</button>
+        <p style="font-size:1.2rem;">
+            Welcome! This game uses a fun swipe system inspired by apps like Tinder.
+            Swipe <strong>RIGHT 👍</strong> for professional posts and 
+            <strong>LEFT 👎</strong> for unprofessional ones.
+        </p>
 
-    <div id="result"></div>
+        <p style="font-size:1.1rem;">
+            The more correct swipes you make, the more points you earn!  
+            Protect the company’s digital footprint and become a <strong>Brand Guardian</strong>.
+        </p>
+
+        <button id="start-btn" class="btn">Start Game 🎮</button>
+    </div>
+
+    <!-- GAMEPLAY SCREEN -->
+    <div id="gameplay-screen">
+        <h2>Swipe for the Brand</h2>
+        <p id="instructions">Swipe LEFT 👎 for unprofessional. Swipe RIGHT 👍 for professional.</p>
+
+        <div id="card"></div>
+
+        <button id="left-btn" class="btn">👎 Swipe LEFT</button>
+        <button id="right-btn" class="btn">👍 Swipe RIGHT</button>
+
+        <div id="result"></div>
+    </div>
+
 </div>
 
 <script>
@@ -83,22 +135,22 @@ const textPosts = [
 
 // FUNNY IMAGE IDEAS (all unprofessional)
 const imagePosts = [
-    { text: "Image: Employee asleep in their chair with a granola bar in their hand.", correct: "left" },
-    { text: "Image: Desk covered in empty energy drink cans with a note saying 'don’t judge me.'", correct: "left" },
-    { text: "Image: Blurry Zoom selfie with a 'send help' sticky note behind them.", correct: "left" },
-    { text: "Image: Dog blocking the camera during a video call.", correct: "left" },
-    { text: "Image: Coworker wrapped in a blanket because the AC is freezing.", correct: "left" },
-    { text: "Image: Spilled coffee shaped like a sad face on reports.", correct: "left" },
-    { text: "Image: Screen with 30+ tabs open including memes and shopping.", correct: "left" },
-    { text: "Image: Coworker hiding behind a giant plant during a meeting.", correct: "left" },
-    { text: "Image: Whiteboard covered in doodles including a 'team mascot.'", correct: "left" },
-    { text: "Image: Bathroom mirror selfie with company badge visible.", correct: "left" }
+    { text: "📸 Employee asleep in their chair with a granola bar in their hand.", correct: "left" },
+    { text: "📸 Desk covered in empty energy drink cans with a note saying 'don’t judge me.'", correct: "left" },
+    { text: "📸 Blurry Zoom selfie with a 'send help' sticky note behind them.", correct: "left" },
+    { text: "📸 Dog blocking the camera during a video call.", correct: "left" },
+    { text: "📸 Coworker wrapped in a blanket because the AC is freezing.", correct: "left" },
+    { text: "📸 Spilled coffee shaped like a sad face on reports.", correct: "left" },
+    { text: "📸 Screen with 30+ tabs open including memes and shopping.", correct: "left" },
+    { text: "📸 Coworker hiding behind a giant plant during a meeting.", correct: "left" },
+    { text: "📸 Whiteboard covered in doodles including a 'team mascot.'", correct: "left" },
+    { text: "📸 Bathroom mirror selfie with company badge visible.", correct: "left" }
 ];
 
 const allCards = [...textPosts, ...imagePosts];
 
 let index = 0;
-let score = 10;
+let score = 0;
 
 const cardElement = document.getElementById("card");
 const resultElement = document.getElementById("result");
@@ -116,8 +168,6 @@ function swipe(direction) {
 
     if (direction === allCards[index].correct) {
         score++;
-    } else {
-        score--;
     }
 
     index++;
@@ -129,17 +179,21 @@ function endGame() {
     document.getElementById("left-btn").style.display = "none";
     document.getElementById("right-btn").style.display = "none";
 
-    if (score >= 15) {
-        resultElement.textContent = `Final Score: ${score} — You are a Brand Guardian!`;
+    if (score >= 12) {
+        resultElement.textContent = `Final Score: ${score} — 🎉 You are a Brand Guardian!`;
     } else {
-        resultElement.textContent = `Final Score: ${score} — Your digital footprint needs work.`;
+        resultElement.textContent = `Final Score: ${score} — ⚠️ Your digital footprint needs work.`;
     }
 }
 
 document.getElementById("left-btn").addEventListener("click", () => swipe("left"));
 document.getElementById("right-btn").addEventListener("click", () => swipe("right"));
 
-showCard();
+document.getElementById("start-btn").addEventListener("click", () => {
+    document.getElementById("instructions-screen").style.display = "none";
+    document.getElementById("gameplay-screen").style.display = "block";
+    showCard();
+});
 </script>
 
 </body>
