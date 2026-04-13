@@ -164,7 +164,8 @@ function playClick() {
     osc.start();
     osc.stop(ctx.currentTime + 0.1);
 }
-// Improved beep sound generator with distinct tones
+
+// IMPROVED BEEP SOUND
 function playBeep(type) {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     const osc = ctx.createOscillator();
@@ -174,25 +175,21 @@ function playBeep(type) {
     gain.connect(ctx.destination);
 
     if (type === "correct") {
-        // Bright happy ding
         osc.type = "triangle";
         osc.frequency.value = 900;
         gain.gain.value = 0.25;
     } 
     else if (type === "wrong") {
-        // Low buzzy error sound
         osc.type = "square";
         osc.frequency.value = 150;
         gain.gain.value = 0.3;
     } 
     else if (type === "start") {
-        // Cheerful chime
         osc.type = "sine";
         osc.frequency.value = 700;
         gain.gain.value = 0.25;
     } 
     else if (type === "end") {
-        // Soft thump
         osc.type = "sine";
         osc.frequency.value = 300;
         gain.gain.value = 0.2;
@@ -202,16 +199,14 @@ function playBeep(type) {
     osc.stop(ctx.currentTime + 0.25);
 }
 
-}
-
-// TEXT POSTS (expanded)
+// FIXED TEXT POSTS (correct = right)
 const textPosts = [
-    { text: "First day at BrightPath. Hoping I don’t break anything.", correct: "left" },
+    { text: "First day at BrightPath. Hoping I don’t break anything.", correct: "right" },
     { text: "Why do people email me things they could’ve Googled in 10 seconds.", correct: "left" },
     { text: "Wrapped up a great meeting with the project team. Feeling productive today.", correct: "right" },
     { text: "Whoever designed our new software update… we need to talk.", correct: "left" },
     { text: "Appreciate the support from everyone on the team this week. Busy but good.", correct: "right" },
-    { text: "BrightPath’s coffee machine is the only thing keeping me alive right now.", correct: "left" },
+    { text: "BrightPath’s coffee machine is the only thing keeping me alive right now.", correct: "right" },
     { text: "Customer yelled at me for something that wasn’t even my fault. Love that.", correct: "left" },
     { text: "Proud of the work our team did on the community project today.", correct: "right" },
     { text: "Can’t wait for this day to be over. Everything is annoying.", correct: "left" },
@@ -222,7 +217,7 @@ const textPosts = [
     { text: "Great collaboration today — proud of this team.", correct: "right" }
 ];
 
-// FUNNY IMAGE IDEAS (expanded)
+// FIXED IMAGE POSTS (correct = right? No — all unprofessional = left)
 const imagePosts = [
     { text: "📸 Employee asleep in their chair with a granola bar in their hand.", correct: "left" },
     { text: "📸 Desk covered in empty energy drink cans with a note saying 'don’t judge me.'", correct: "left" },
@@ -285,6 +280,7 @@ function swipe(direction) {
 }
 
 function endGame() {
+    playBeep("end");
 
     cardElement.style.display = "none";
     document.getElementById("left-btn").style.display = "none";
@@ -301,6 +297,7 @@ document.getElementById("left-btn").addEventListener("click", () => swipe("left"
 document.getElementById("right-btn").addEventListener("click", () => swipe("right"));
 
 document.getElementById("start-btn").addEventListener("click", () => {
+    playBeep("start");
     bgMusic.play();
     document.getElementById("instructions-screen").style.display = "none";
     document.getElementById("gameplay-screen").style.display = "block";
