@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Bad Bad No Good</title>
+<title>Bad Bad, No Good</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -115,7 +115,7 @@
     <!-- INSTRUCTION SCREEN -->
     <div id="instructions-screen">
         <div class="emoji">📱🔥</div>
-        <h2>Bad Bad No Good</h2>
+        <h2>Bad Bad. No Good</h2>
 
         <p style="font-size:1.2rem;">
             This game works like Tinder — swipe <strong>RIGHT 👍</strong> for professional posts and 
@@ -132,7 +132,7 @@
 
     <!-- GAMEPLAY SCREEN -->
     <div id="gameplay-screen">
-        <h2>Bad Bad No Good</h2>
+        <h2>Bad Bad, No Good</h2>
         <p id="instructions">Swipe LEFT 👎 for unprofessional. Swipe RIGHT 👍 for professional.</p>
 
         <div id="card"></div>
@@ -201,39 +201,49 @@ function playBeep(type) {
 
 // FIXED TEXT POSTS (correct = right)
 const textPosts = [
-    { text: "First day at BrightPath. Hoping I don’t break anything.", correct: "right" },
-    { text: "Why do people email me things they could’ve Googled in 10 seconds.", incorrect: "left" },
-    { text: "Wrapped up a great meeting with the project team. Feeling productive today.", correct: "right" },
-    { text: "Whoever designed our new software update… we need to talk.", incorrect: "left" },
-    { text: "Appreciate the support from everyone on the team this week. Busy but good.", correct: "right" },
-    { text: "BrightPath’s coffee machine is the only thing keeping me alive right now.", incorrect: "left" },
-    { text: "Customer yelled at me for something that wasn’t even my fault. Love that.", incorrect: "left" },
-    { text: "Proud of the work our team did on the community project today.", correct: "right" },
-    { text: "Can’t wait for this day to be over. Everything is annoying.", incorrect: "left" },
-    { text: "Shoutout to the onboarding team — super helpful this week.", correct: "right" },
-    { text: "Just posted a meme about my boss. Hope he doesn’t see it lol.", incorrect: "left" },
-    { text: "Excited to represent BrightPath at tomorrow’s career fair!", correct: "right" },
-    { text: "If one more customer emails me today I’m quitting.", incorrect: "left" },
-    { text: "Great collaboration today — proud of this team.", correct: "right" }
+    { text: "Proud to share our team reached our quarterly goals today!", correct: "right" },
+    { text: "Posting screenshots of customer emails because they annoyed me.", correct: "left" },
+    { text: "Excited to attend a workshop to improve my leadership skills.", correct: "right" },
+    { text: "Just called a customer ‘ridiculous’ in my story. Whatever.", correct: "left" },
+    { text: "Grateful for the support from my coworkers this week.", correct: "right" },
+    { text: "Why does my manager always message me at the worst times.", correct: "left" },
+    { text: "Volunteering with my company today — love giving back!", correct: "right" },
+    { text: "I swear if one more person asks me a dumb question…", correct: "left" },
+    { text: "Finished a big project early — feeling proud of the work!", correct: "right" },
+    { text: "Posting a rant about how boring my job is lol.", correct: "left" },
+    { text: "Shoutout to the IT team for fixing my laptop so fast!", correct: "right" },
+    { text: "Accidentally leaked a private meeting slide but it’s fine.", correct: "left" },
+    { text: "Had a great conversation with a mentor today.", correct: "right" },
+    { text: "Making fun of customers on my private story again.", correct: "left" },
+    { text: "Celebrating my coworker’s promotion — well deserved!", correct: "right" },
+    { text: "Just posted a meme about skipping work tomorrow.", correct: "left" },
+    { text: "Learning new skills to help me grow in my role.", correct: "right" },
+    { text: "Complaining about my boss publicly because I’m bored.", correct: "left" },
+    { text: "Sharing our company’s community event — great turnout!", correct: "right" },
+    { text: "Posting a picture of my messy desk with the caption ‘chaos’.", correct: "left" }
 ];
 
 // FIXED IMAGE POSTS (correct = right? No — all unprofessional = left)
 const imagePosts = [
-    { text: "📸 Employee asleep in their chair with a granola bar in their hand.", correct: "left" },
-    { text: "📸 Desk covered in empty energy drink cans with a note saying 'don’t judge me.'", correct: "left" },
-    { text: "📸 Blurry Zoom selfie with a 'send help' sticky note behind them.", correct: "left" },
-    { text: "📸 Dog blocking the camera during a video call.", correct: "left" },
-    { text: "📸 Coworker wrapped in a blanket because the AC is freezing.", correct: "left" },
-    { text: "📸 Spilled coffee shaped like a sad face on reports.", correct: "left" },
-    { text: "📸 Screen with 30+ tabs open including memes and shopping.", correct: "left" },
-    { text: "📸 Coworker hiding behind a giant plant during a meeting.", correct: "left" },
-    { text: "📸 Whiteboard covered in doodles including a 'team mascot.'", correct: "left" },
-    { text: "📸 Bathroom mirror selfie with company badge visible.", correct: "left" },
-    { text: "📸 Someone making a TikTok dance in the office.", correct: "left" },
-    { text: "📸 Employee wearing sunglasses indoors typing dramatically.", correct: "left" }
+    { text: "📸 Employee taking a selfie during a meeting instead of paying attention.", correct: "left" },
+    { text: "📸 Someone filming a TikTok dance in the office hallway.", correct: "left" },
+    { text: "📸 Screenshot of a private company chat posted publicly.", correct: "left" },
+    { text: "📸 Employee wearing pajamas on a video call with clients.", correct: "left" },
+    { text: "📸 Desk covered in snack wrappers with a caption ‘don’t judge me’.", correct: "left" },
+    { text: "📸 Someone making a funny face behind a coworker during a Zoom call.", correct: "left" },
+    { text: "📸 Employee taking a mirror selfie with their badge visible.", correct: "left" },
+    { text: "📸 Someone recording a coworker without permission.", correct: "left" },
+    { text: "📸 A whiteboard full of doodles instead of work notes.", correct: "left" },
+    { text: "📸 Employee asleep at their desk with headphones on.", correct: "left" },
+    { text: "📸 Screenshot of 40 open tabs including memes and shopping.", correct: "left" },
+    { text: "📸 Someone posting a picture of confidential documents on their desk.", correct: "left" }
 ];
 
-const allCards = [...textPosts, ...imagePosts];
+
+let allCards = [...textPosts, ...imagePosts];
+
+// Shuffle automatically
+allCards = allCards.sort(() => Math.random() - 0.5);
 
 let index = 0;
 let score = 0;
