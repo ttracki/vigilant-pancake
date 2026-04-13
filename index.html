@@ -146,6 +146,25 @@
 </div>
 
 <script>
+// BACKGROUND MUSIC
+let bgMusic = new Audio();
+bgMusic.src = "https://cdn.pixabay.com/download/audio/2022/03/15/audio_7b0e5b1e3d.mp3?filename=happy-pop-110624.mp3";
+bgMusic.loop = true;
+bgMusic.volume = 0.25;
+
+// CLICK SOUND
+function playClick() {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.frequency.value = 300;
+    gain.gain.value = 0.15;
+    osc.start();
+    osc.stop(ctx.currentTime + 0.1);
+}
+
 // Simple beep sound generator
 function playBeep(type) {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -173,7 +192,7 @@ function playBeep(type) {
     osc.stop(ctx.currentTime + 0.15);
 }
 
-// TEXT POSTS (realistic)
+// TEXT POSTS (expanded)
 const textPosts = [
     { text: "First day at BrightPath. Hoping I don’t break anything.", correct: "right" },
     { text: "Why do people email me things they could’ve Googled in 10 seconds.", correct: "left" },
@@ -184,10 +203,14 @@ const textPosts = [
     { text: "Customer yelled at me for something that wasn’t even my fault. Love that.", correct: "left" },
     { text: "Proud of the work our team did on the community project today.", correct: "right" },
     { text: "Can’t wait for this day to be over. Everything is annoying.", correct: "left" },
-    { text: "Shoutout to the onboarding team — super helpful this week.", correct: "right" }
+    { text: "Shoutout to the onboarding team — super helpful this week.", correct: "right" },
+    { text: "Just posted a meme about my boss. Hope he doesn’t see it lol.", correct: "left" },
+    { text: "Excited to represent BrightPath at tomorrow’s career fair!", correct: "right" },
+    { text: "If one more customer emails me today I’m quitting.", correct: "left" },
+    { text: "Great collaboration today — proud of this team.", correct: "right" }
 ];
 
-// FUNNY IMAGE IDEAS (all unprofessional)
+// FUNNY IMAGE IDEAS (expanded)
 const imagePosts = [
     { text: "📸 Employee asleep in their chair with a granola bar in their hand.", correct: "left" },
     { text: "📸 Desk covered in empty energy drink cans with a note saying 'don’t judge me.'", correct: "left" },
@@ -198,7 +221,9 @@ const imagePosts = [
     { text: "📸 Screen with 30+ tabs open including memes and shopping.", correct: "left" },
     { text: "📸 Coworker hiding behind a giant plant during a meeting.", correct: "left" },
     { text: "📸 Whiteboard covered in doodles including a 'team mascot.'", correct: "left" },
-    { text: "📸 Bathroom mirror selfie with company badge visible.", correct: "left" }
+    { text: "📸 Bathroom mirror selfie with company badge visible.", correct: "left" },
+    { text: "📸 Someone making a TikTok dance in the office.", correct: "left" },
+    { text: "📸 Employee wearing sunglasses indoors typing dramatically.", correct: "left" }
 ];
 
 const allCards = [...textPosts, ...imagePosts];
@@ -220,14 +245,14 @@ function showCard() {
 function swipe(direction) {
     if (index >= allCards.length) return;
 
-    // Add animation class
+    playClick();
+
     if (direction === "left") {
         cardElement.classList.add("swipe-left");
     } else {
         cardElement.classList.add("swipe-right");
     }
 
-    // Play sound
     if (direction === allCards[index].correct) {
         score++;
         playBeep("correct");
@@ -235,13 +260,11 @@ function swipe(direction) {
         playBeep("wrong");
     }
 
-    // Wait for animation to finish
     setTimeout(() => {
         cardElement.classList.remove("swipe-left", "swipe-right");
         index++;
         showCard();
 
-        // Reset animation
         cardElement.classList.add("card-reset");
         setTimeout(() => {
             cardElement.classList.remove("card-reset");
@@ -256,7 +279,7 @@ function endGame() {
     document.getElementById("left-btn").style.display = "none";
     document.getElementById("right-btn").style.display = "none";
 
-    if (score >= 12) {
+    if (score >= 15) {
         resultElement.textContent = `Final Score: ${score} — 🎉 You are a Brand Guardian!`;
     } else {
         resultElement.textContent = `Final Score: ${score} — ⚠️ Your digital footprint needs work.`;
@@ -268,6 +291,7 @@ document.getElementById("right-btn").addEventListener("click", () => swipe("righ
 
 document.getElementById("start-btn").addEventListener("click", () => {
     playBeep("start");
+    bgMusic.play();
     document.getElementById("instructions-screen").style.display = "none";
     document.getElementById("gameplay-screen").style.display = "block";
     showCard();
@@ -276,4 +300,3 @@ document.getElementById("start-btn").addEventListener("click", () => {
 
 </body>
 </html>
-
